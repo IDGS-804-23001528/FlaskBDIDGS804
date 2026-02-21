@@ -1,27 +1,33 @@
-{% extends "layout.html" %} 
-{% block container %} 
+{% extends "layout.html" %}
+{% block container %}
 {% import "_macros.html" as macros %}
-
+ 
 <div class="container mx-auto px-4 mt-24 mb-10">
   <h2 class="max-w-md mx-auto mb-4 text-xl font-bold text-gray-800">Registro de Alumno</h2>
-
+ 
   <form class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-100 h-auto flex flex-col" action="/alumnos" method="POST" novalidate>
     {{form.csrf_token}}
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-
+ 
     <div class="grid md:grid-cols-2 md:gap-6">
       <div class="relative z-0 w-full mb-6 group">
         {{macros.campoNuevo(form.nombre, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer')}}
       </div>
       <div class="relative z-0 w-full mb-6 group">
-        {{macros.campoNuevo(form.apaterno, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer')}}
+        {{macros.campoNuevo(form.apellidos, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer')}}
       </div>
     </div>
-
+    
+     <div class="relative z-0 w-full mb-8 group">
+      {{macros.campoNuevo(form.telefono, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer')}}
+    </div>
+ 
     <div class="relative z-0 w-full mb-8 group">
       {{macros.campoNuevo(form.email, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer')}}
     </div>
-
+ 
+    
+ 
     <div class="flex flex-col gap-3 mt-4">
       <button
         type="submit"
@@ -29,7 +35,7 @@
       >
         Registrar
       </button>
-      
+     
       <button
         type="button"
         onclick="window.history.back()"
@@ -40,5 +46,6 @@
     </div>
   </form>
 </div>
-
+ 
 {% endblock %}
+ 
