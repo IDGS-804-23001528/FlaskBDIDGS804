@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block container %}
+{% import "_macros.html" as macros %}
+
+<div class="flex justify-center items-center min-h-[calc(100vh-80px)] px-4 py-10">
+    <div class="flex flex-col items-stretch bg-white border border-gray-200 rounded-2xl shadow-lg md:flex-row md:max-w-2xl w-full overflow-hidden">
+        
+        <div class="bg-gray-50 flex items-center justify-center p-6 md:w-48 border-b md:border-b-0 md:border-r border-gray-100">
+            <img class="object-contain w-32 h-32 md:w-full md:h-auto" 
+                 src="{{ url_for('static', filename='img/iconoss.png') }}" 
+                 alt="icono"/>
+        </div>
+
+        <div class="flex flex-col justify-between p-8 leading-normal w-full">
+            <h5 class="mb-6 text-2xl font-bold tracking-tight text-gray-800">
+                Registro de Maestros
+            </h5>
+
+            <form action="{{ url_for('maestros.Registromaes') }}" method="POST" novalidate>
+                {{ form.csrf_token }}
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="relative z-0 w-full mb-6 group">
+                        {{ macros.campoNuevo(form.nombre, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer') }}
+                    </div>
+                    <div class="relative z-0 w-full mb-6 group">
+                        {{ macros.campoNuevo(form.apellidos, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer') }}
+                    </div>
+                </div>
+
+                <div class="relative z-0 w-full mb-6 group">
+                    {{ macros.campoNuevo(form.especialidad, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer') }}
+                </div>
+
+                <div class="relative z-0 w-full mb-8 group">
+                    {{ macros.campoNuevo(form.email, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer') }}
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button type="submit"
+                            class="flex-1 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-3 shadow-md transition-all">
+                        Registrar
+                    </button>
+
+                    <button type="button" onclick="window.history.back()"
+                            class="flex-1 text-gray-700 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-5 py-3 transition-all">
+                        Regresar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block container %}
+{% import "_macros.html" as macros %}
+
+<div class="container mx-auto px-4 mt-24 mb-10">
+  <h2 class="max-w-md mx-auto mb-4 text-xl font-bold text-gray-800">Modificar Maestro</h2>
+
+  <form class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-100 h-auto flex flex-col" 
+        action="{{ url_for('maestros.modificarmaes') }}" method="POST" novalidate>
+    
+    {{ form.csrf_token }}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+    <div class="relative z-0 w-full mb-6 group">
+        {{ macros.campoNuevo(form.id, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer') }}
+    </div>
+
+    <div class="grid md:grid-cols-2 md:gap-6">
+      <div class="relative z-0 w-full mb-6 group">
+        {{ macros.campoNuevo(form.nombre, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer') }}
+      </div>
+
+      <div class="relative z-0 w-full mb-6 group">
+        {{ macros.campoNuevo(form.apellidos, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer') }}
+      </div>
+    </div>
+
+    <div class="relative z-0 w-full mb-8 group">
+      {{ macros.campoNuevo(form.especialidad, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer') }}
+    </div>
+
+    <div class="relative z-0 w-full mb-8 group">
+      {{ macros.campoNuevo(form.email, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer') }}
+    </div>
+
+    <div class="flex flex-col gap-3 mt-4">
+      <button type="submit"
+              class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 shadow-md transition-all">
+        Guardar Cambios
+      </button>
+
+      <button type="button" onclick="window.history.back()"
+              class="w-full text-gray-700 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-3 transition-all">
+        Regresar
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

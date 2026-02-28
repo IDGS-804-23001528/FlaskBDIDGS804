@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block container %}
+{% import "_macros.html" as macros %}
+
+<div class="container mx-auto px-4 mt-24 mb-10">
+  <h2 class="max-w-md mx-auto mb-4 text-xl font-bold text-gray-800">Eliminar Maestro</h2>
+
+  <form class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-100 h-auto flex flex-col" 
+        action="{{ url_for('maestros.eliminarmaes') }}" method="POST" novalidate>
+    
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+    <div class="relative z-0 w-full mb-6 group">
+        {{ macros.campoNuevo(form.id, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-red-600 peer') }}
+    </div>
+
+    <div class="grid md:grid-cols-2 md:gap-6">
+      <div class="relative z-0 w-full mb-6 group">
+        {{ macros.campoNuevo(form.nombre, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-red-600 peer') }}
+      </div>
+
+      <div class="relative z-0 w-full mb-6 group">
+        {{ macros.campoNuevo(form.apellidos, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-red-600 peer') }}
+      </div>
+    </div>
+
+    <div class="relative z-0 w-full mb-8 group">
+      {{ macros.campoNuevo(form.especialidad, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-red-600 peer') }}
+    </div>
+
+    <div class="relative z-0 w-full mb-8 group">
+      {{ macros.campoNuevo(form.email, class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-red-600 peer') }}
+    </div>
+
+    <p class="text-sm text-red-500 mb-6 font-medium italic text-center">
+        ¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer.
+    </p>
+
+    <div class="flex flex-col gap-3 mt-4">
+      <button type="submit"
+              class="w-full text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 shadow-md transition-all">
+        Confirmar Eliminación
+      </button>
+
+      <a href="{{ url_for('maestros.listado_maestros') }}"
+         class="w-full text-center text-gray-700 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-3 transition-all">
+        Regresar
+      </a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
