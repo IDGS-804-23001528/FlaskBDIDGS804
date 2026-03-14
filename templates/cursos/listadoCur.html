@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="min-h-screen bg-slate-50 py-12 px-6">
+    <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+            <div>
+                <h1 class="text-4xl font-black text-slate-900 tracking-tight">Catálogo de Cursos</h1>
+                <p class="text-slate-500 font-medium mt-1">Administración de oferta académica y asignaciones.</p>
+            </div>
+            
+            <a href="/cursos/insertar" class="inline-flex items-center justify-center bg-violet-600 hover:bg-violet-700 text-white font-bold px-6 py-3 rounded-2xl transition-all shadow-lg shadow-violet-100 active:scale-95">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Crear nuevo curso
+            </a>
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="bg-slate-50/50 border-b border-slate-100">
+                            <th class="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Información del Curso</th>
+                            <th class="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Titular</th>
+                            <th class="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] text-center">Gestión de Alumnos</th>
+                            <th class="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-50">
+                        {% for cur in curso %}
+                        <tr class="group hover:bg-slate-50/80 transition-colors">
+                            <td class="px-8 py-6">
+                                <p class="text-sm font-black text-slate-900 leading-none mb-1">{{ cur.nombre }}</p>
+                                <p class="text-xs text-slate-400 font-medium line-clamp-1 italic">{{ cur.descripcion }}</p>
+                            </td>
+
+                            <td class="px-8 py-6">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center font-bold text-[10px] mr-3 border border-violet-100 uppercase">
+                                        {{ cur.maestro.nombre[0] }}{{ cur.maestro.apellidos[0] }}
+                                    </div>
+                                    <span class="text-sm font-bold text-slate-600">
+                                        {{ cur.maestro.nombre }} {{ cur.maestro.apellidos }}
+                                    </span>
+                                </div>
+                            </td>
+
+                            <td class="px-8 py-6 text-center">
+                                <a href="/cursos/asignar?id={{ cur.id }}" class="inline-flex items-center px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-black hover:bg-emerald-600 hover:text-white transition-all border border-emerald-100 uppercase tracking-tighter">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                                    Asignar Alumnos
+                                </a>
+                            </td>
+
+                            <td class="px-8 py-6 text-right">
+                                <div class="flex items-center justify-end gap-1">
+                                    <a href="/cursos/detalles?id={{ cur.id }}" class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all" title="Ver resumen">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    </a>
+                                    <a href="/cursos/modificar?id={{ cur.id }}" class="p-2 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-xl transition-all" title="Editar curso">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                    </a>
+                                    <a href="/cursos/eliminar?id={{ cur.id }}" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Eliminar curso">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            {% if not curso %}
+            <div class="py-20 text-center bg-slate-50/30">
+                <p class="text-slate-400 font-bold italic">No hay cursos registrados actualmente.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

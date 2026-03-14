@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="min-h-screen bg-slate-50 flex flex-col justify-center items-center py-12 px-4">
+    
+    <div class="w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 p-10 pb-20">
+        
+        <div class="flex justify-center mb-6">
+            <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center ring-8 ring-red-50/30">
+                <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-black text-slate-900 tracking-tight">¿Eliminar Maestro?</h1>
+            <p class="text-slate-400 text-sm mt-2 font-medium">Esta acción es permanente y no se puede deshacer.</p>
+        </div>
+
+        <div class="bg-slate-50/80 rounded-3xl p-6 mb-10 border border-slate-100">
+            <div class="space-y-4">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Nombre y Apellidos</label>
+                    <p class="text-base font-bold text-slate-800">{{ form.nombre.data }} {{ form.apellidos.data }}</p>
+                </div>
+                <div class="pt-3 border-t border-slate-200/50">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Especialidad</label>
+                    <p class="text-sm font-semibold text-slate-600">{{ form.especialidad.data }}</p>
+                </div>
+            </div>
+        </div>
+
+        <form action="" method="POST" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            
+            <div class="hidden">
+                {{ form.matricula }} {{ form.nombre }} {{ form.apellidos }} {{ form.email }} {{ form.especialidad }}
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 !text-white font-bold py-4 rounded-2xl shadow-xl shadow-red-100 transition-all transform active:scale-95">
+                    Confirmar Eliminación
+                </button>
+                
+                <a href="/maestros" class="w-full text-center text-slate-400 hover:text-slate-800 font-bold text-sm py-2 transition-colors">
+                    No, cancelar y regresar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="min-h-screen bg-slate-50 py-12 px-6">
+    <div class="max-w-5xl mx-auto">
+        
+        <div class="mb-10 text-center md:text-left">
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Centro de Consultas</h1>
+            <p class="text-slate-500 font-medium">Visualiza la relación entre alumnos y cursos de manera profesional.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                <form method="GET" action="{{ url_for('inscripciones.index') }}">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 mb-2 block">Por Curso</label>
+                    <select name="curso_id" onchange="this.form.submit()" class="w-full px-5 py-3.5 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 outline-none text-sm font-bold text-slate-700">
+                        <option value="" disabled {% if not curso_seleccionado %}selected{% endif %}>-- Elige un curso --</option>
+                        {% for c in todos_cursos %}
+                            <option value="{{ c.id }}" {% if curso_seleccionado and curso_seleccionado.id == c.id %}selected{% endif %}>{{ c.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                <form method="GET" action="{{ url_for('inscripciones.index') }}">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 mb-2 block">Por Estudiante</label>
+                    <select name="alumno_id" onchange="this.form.submit()" class="w-full px-5 py-3.5 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-indigo-500 outline-none text-sm font-bold text-slate-700">
+                        <option value="" disabled {% if not alumno_seleccionado %}selected{% endif %}>-- Elige un alumno --</option>
+                        {% for a in todos_alumnos %}
+                            <option value="{{ a.id }}" {% if alumno_seleccionado and alumno_seleccionado.id == a.id %}selected{% endif %}>{{ a.nombre }} {{ a.apellidos }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+
+        {% if curso_seleccionado %}
+        <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden">
+            <div class="px-8 py-6 bg-slate-50/30 border-b border-slate-50">
+                <h3 class="text-lg font-black text-slate-800">Inscritos en <span class="text-blue-600">{{ curso_seleccionado.nombre }}</span></h3>
+            </div>
+            <table class="w-full text-left">
+                <tbody class="divide-y divide-slate-50">
+                    {% for alumno in curso_seleccionado.alumnos %}
+                    <tr class="hover:bg-slate-50/50">
+                        <td class="px-8 py-5 text-sm font-bold text-slate-800">{{ alumno.nombre }} {{ alumno.apellidos }}</td>
+                        <td class="px-8 py-5 text-sm text-slate-500">{{ alumno.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        {% if alumno_seleccionado %}
+        <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden mt-8">
+            <div class="px-8 py-6 bg-slate-50/30 border-b border-slate-50">
+                <h3 class="text-lg font-black text-slate-800">Cursos de <span class="text-indigo-600">{{ alumno_seleccionado.nombre }}</span></h3>
+            </div>
+            <table class="w-full text-left">
+                <tbody class="divide-y divide-slate-50">
+                    {% for curso in alumno_seleccionado.cursos %}
+                    <tr class="hover:bg-slate-50/50">
+                        <td class="px-8 py-5 text-sm font-bold text-slate-800">{{ curso.nombre }}</td>
+                        <td class="px-8 py-5 text-sm text-slate-500">{{ curso.maestro.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

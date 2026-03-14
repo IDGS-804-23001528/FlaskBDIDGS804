@@ -1,16 +1,36 @@
-{% macro datos(name,placeholder,type="text") %}
-<div class="mb-3">
-    <label for="{{name}}" class="form-label">{{ name }}</label>
-    <input type="{{type}}" class="form-control" id="{{name}}" name="{{name}}" placeholder="{{ placeholder}}">
-</div>
-{% endmacro %}
+{%macro datos(name,placeholder,type='text')%}
+ 
+<p><input name="{{name}}" type="{{type}}" placeholder="{{placeholder}}" > </p>
+ 
+{%endmacro%}
+ 
+{%macro camposNuevos(field) %}
+<h2 class="font-bold text-gray-800">{{field.label}}</h2>
+<dd>{{field(**kwargs) | safe}}</dd>
+{%if field.errors%}
+<ul>
+    {%for error in field.errors%}
+        <li style="color: red;">{{error}}</li>
+    {%endfor%}
+</ul>
+ 
+{%endif%}
+{%endmacro%}
+ 
+{% macro campoSelect(field, maestros) %}
+<h2 class="font-bold text-gray-800">{{ field.label }}</h2>
 
-{% macro campoNuevo(field) %}
-<td>{{field.label}}</td>
-<dd>{{field(**kwargs) | safe }}</dd>
-{% if field.errors %}
-    {% for error in field.errors %} 
-        <li style="color: red">{{error}}</li>
+<select name="{{ field.name }}"
+        class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs">
+
+    {% for maestro in maestros %}
+        <option value="{{ maestro.matricula }}"
+            {% if maestro.matricula == field.data %}selected{% endif %}>
+            {{ maestro.nombre }}
+        </option>
     {% endfor %}
-{% endif %}
+
+</select>
+
 {% endmacro %}
+ 

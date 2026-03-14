@@ -1,61 +1,93 @@
 {% extends "layout.html" %}
 {% block container %}
 
-<div class="py-32 relative overflow-x-auto sm:rounded-lg container mx-auto px-4">
-  
-  <div class="mb-6">
-    <a href="{{ url_for('maestros.Registromaes') }}" class="inline-flex bg-green-500 text-white px-4 py-2 rounded items-center gap-2 hover:bg-green-600 transition-colors shadow-sm">
-      <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-      </svg>
-      <span class="font-medium">Nuevo Maestro</span>
-    </a>
-  </div>
-
-  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-      <tr>
-        <th scope="col" class="px-6 py-3">Nombre</th>
-        <th scope="col" class="px-6 py-3">Apellidos</th>
-        <th scope="col" class="px-6 py-3">Especialidad</th>
-        <th scope="col" class="px-6 py-3">Correo</th>
-        <th scope="col" class="px-6 py-3 text-center">Acciones</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {% for maes in maestro %}
-      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          {{ maes.nombre }}
-        </th>
-        <td class="px-6 py-4">{{ maes.apellidos }}</td>
-        <td class="px-6 py-4">{{ maes.especialidad }}</td>
-        <td class="px-6 py-4">{{ maes.email }}</td>
-
-        <td class="px-6 py-4">
-          <div class="flex items-center justify-center gap-2">
-            <a href="{{ url_for('maestros.modificarmaes', id=maes.matricula) }}"
-              class="flex items-center gap-1 bg-orange-500 text-white px-3 py-2 rounded hover:bg-orange-600 text-xs transition-all">
-              Editar
+<div class="min-h-screen bg-slate-50 py-12 px-6">
+    <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+            <div>
+                <h1 class="text-4xl font-black text-slate-900 tracking-tight">Panel de Maestros</h1>
+                <p class="text-slate-500 font-medium mt-1">Gestión académica y control de docentes.</p>
+            </div>
+            
+            <a href="/maestros/insertar" class="inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-3 rounded-2xl transition-all shadow-lg shadow-slate-200 active:scale-95">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Agregar nuevo maestro
             </a>
+        </div>
 
-            <a href="{{ url_for('maestros.detallesmaes', id=maes.matricula) }}"
-              class="flex items-center gap-1 bg-purple-500 text-white px-3 py-2 rounded hover:bg-purple-600 text-xs transition-all">
-              Detalles
-            </a>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="mb-6 p-4 rounded-2xl flex items-center {% if category == 'danger' %}bg-red-50 text-red-700 border border-red-100{% else %}bg-emerald-50 text-emerald-700 border border-emerald-100{% endif %}">
+                <span class="text-sm font-bold">{{ message }}</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
 
-            <a href="{{ url_for('maestros.eliminarmaes', id=maes.matricula) }}"
-              class="flex items-center gap-1 bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 text-xs transition-all">
-              Eliminar
-            </a>
-          </div>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        <div class="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50/50 border-b border-slate-100">
+                            <th class="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Maestro</th>
+                            <th class="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Especialidad</th>
+                            <th class="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Contacto</th>
+                            <th class="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-50">
+                        {% for maestr in maestros %}
+                        <tr class="group hover:bg-slate-50/80 transition-colors">
+                            <td class="px-8 py-6">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm mr-4 border border-blue-100">
+                                        {{ maestr.nombre[0] }}{{ maestr.apellidos[0] }}
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-slate-900 leading-none mb-1">{{ maestr.nombre }} {{ maestr.apellidos }}</p>
+                                        <p class="text-[11px] text-slate-400 font-medium">ID: #{{ maestr.matricula }}</p>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="px-8 py-6">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-600 border border-amber-100 uppercase tracking-wider">
+                                    {{ maestr.especialidad }}
+                                </span>
+                            </td>
+
+                            <td class="px-8 py-6 text-sm font-medium text-slate-500">
+                                {{ maestr.email }}
+                            </td>
+
+                            <td class="px-8 py-6">
+                                <div class="flex items-center justify-center gap-2">
+                                    <a href="/maestros/detalles?matricula={{ maestr.matricula }}" class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all" title="Ver detalles">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    </a>
+                                    <a href="/maestros/modificar?matricula={{ maestr.matricula }}" class="p-2 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-xl transition-all" title="Editar">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                                    </a>
+                                    <a href="/maestros/eliminar?matricula={{ maestr.matricula }}" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Eliminar">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="px-8 py-4 bg-slate-50/50 border-t border-slate-100">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Mostrando {{ maestros|length }} maestros registrados</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

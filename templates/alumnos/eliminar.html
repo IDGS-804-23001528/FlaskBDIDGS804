@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="min-h-screen bg-slate-50 flex flex-col justify-center items-center py-12 px-4">
+    
+    <div class="w-full max-w-md bg-white rounded-[3rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] border border-slate-100 overflow-visible p-10 md:p-12">
+        
+        <div class="flex justify-center mb-8">
+            <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center ring-8 ring-red-50/50">
+                <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight mb-3">¿Eliminar registro?</h1>
+            <p class="text-slate-400 text-sm font-medium leading-relaxed px-4">
+                Estás a punto de borrar a este alumno de la base de datos de forma permanente.
+            </p>
+        </div>
+
+        <div class="bg-slate-50/80 rounded-3xl p-8 mb-10 border border-slate-100/50">
+            <div class="space-y-6">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] block mb-1">Nombre del Alumno</label>
+                    <p class="text-lg font-bold text-slate-800">{{ form.nombre.data }} {{ form.apellidos.data }}</p>
+                </div>
+                <div class="pt-4 border-t border-slate-200/50">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] block mb-1">Identificador de Correo</label>
+                    <p class="text-sm font-semibold text-slate-600">{{ form.email.data }}</p>
+                </div>
+            </div>
+        </div>
+
+        <form action="" method="POST" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            
+            <div class="hidden">
+                {{ form.id }} {{ form.nombre }} {{ form.apellidos }} {{ form.email }} {{ form.telefono }}
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-5 rounded-2xl shadow-xl shadow-red-200 transition-all duration-300 transform hover:-translate-y-1 active:scale-95 text-lg">
+                    Confirmar Eliminación
+                </button>
+                
+                <a href="/alumnos" class="w-full text-center text-slate-400 hover:text-slate-900 font-bold text-sm py-3 transition-colors duration-200">
+                    No, deseo regresar al listado
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

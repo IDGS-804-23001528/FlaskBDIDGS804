@@ -1,33 +1,98 @@
-from wtforms import Form
-from wtforms import StringField, IntegerField
+from wtforms import Form, SelectField
+from flask_wtf import FlaskForm
+from wtforms.validators import Optional
+from wtforms import IntegerField, StringField, PasswordField
 from wtforms import EmailField
 from wtforms import validators
- 
-class UserForm(Form):
-    id = IntegerField('id', [
-        validators.number_range(min=1, max=999999, message='valor no valido')
+
+class UserForm2(Form):
+    id = IntegerField("Id")
+    nombre=StringField("Nombre", [
+        validators.DataRequired(message="El campo es requerido")
     ])
- 
-    nombre = StringField('nombre', [
-        validators.DataRequired(message='El nombre es requerido'),
-        validators.length(min=4, max=20, message='requiere min=4 max=20')
+    matricula = IntegerField("Matricula",[
+        validators.DataRequired(message="El campo es requerido")
     ])
- 
-    apellidos = StringField('apellidos', [
-        validators.DataRequired(message='El apellido es requerido')
+    apellidos=StringField("Apellidos", [
+        validators.DataRequired(message="El campo es requerido")
     ])
- 
-    email = EmailField('correo', [
-        validators.DataRequired(message='El correo es requerido'),
-        validators.Email(message='Ingrese un correo valido')
+    email=EmailField("Correo", [
+        validators.DataRequired(message="El campo es requerido"),
+        validators.Email(message="Ingrese correo válido")
     ])
- 
-    telefono = StringField('telefono', [
-        validators.DataRequired(message='El telefono es requerido'),
-        validators.length(min=7, max=15, message='telefono invalido')
+    telefono=StringField("Teléfono", [
+        validators.DataRequired(message="El campo es requerido")        
     ])
- 
-    especialidad = StringField('especialidad', [
-        validators.DataRequired(message='La especialidad es requerida'),
-        validators.length(min=3, max=50, message='especialidad invalida')
+    especialidad=StringField("Especialidad", [
+        validators.DataRequired(message="El campo es requerido")
     ])
+    
+class AlumnoForm(FlaskForm):
+    id = IntegerField("Id")
+    nombre=StringField("Nombre", [
+        validators.DataRequired(message="El campo es requerido")
+    ])
+    apellidos=StringField("Apellidos", [
+        validators.DataRequired(message="El campo es requerido")
+    ])
+    email=EmailField("Correo", [
+        validators.DataRequired(message="El campo es requerido"),
+        validators.Email(message="Ingrese correo válido")
+    ])
+    telefono=StringField("Teléfono", [
+        validators.DataRequired(message="El campo es requerido")        
+    ])
+    alumno_id=SelectField(
+        "Alumno", 
+        coerce=int,
+        choices=[],
+        validators=[validators.DataRequired()]
+    )
+    
+class MaestroForm(Form):
+    matricula = IntegerField("Matricula", [
+        validators.DataRequired(message="El campo es requerido")
+    ])
+    nombre=StringField("Nombre", [
+        validators.DataRequired(message="El campo es requerido")
+    ])
+    especialidad=StringField("Especialidad", [
+        validators.DataRequired(message="El campo es requerido")
+    ])
+    email=EmailField("Correo", [
+        validators.DataRequired(message="El campo es requerido"),
+        validators.Email(message="Ingrese correo válido")
+    ])
+
+class CursoForm(FlaskForm):
+    id = IntegerField("Id")
+    nombre=StringField(
+        "Nombre", [
+        validators.DataRequired(message="El campo es requerido")]        
+    )
+    descripcion=StringField("Descripcion", [
+        validators.DataRequired(message="El campo es requerido")        
+    ])
+   
+    maestro_id=SelectField(
+        "Maestro", 
+        coerce=int,
+        choices=[],
+        validators=[validators.DataRequired()]
+    )
+   
+    alumno_id=SelectField(
+        "Asignar alumno", 
+        coerce=int,
+        choices=[],
+        validators=[Optional()]
+    )
+    
+class AsignarAlumnoForm(FlaskForm): 
+   
+    alumno_id = SelectField(
+        "Asignar alumno",
+        coerce=int,
+        choices=[],
+        validators=[validators.DataRequired()]
+    )

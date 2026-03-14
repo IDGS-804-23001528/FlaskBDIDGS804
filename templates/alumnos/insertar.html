@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="flex justify-center items-center min-h-screen bg-gray-50 py-12 px-4">
+    <div class="relative bg-white max-w-sm w-full p-10 pb-16 rounded-[2.5rem] shadow-2xl border border-gray-100">
+        
+        <div class="flex flex-col items-center mb-8">
+            <div class="bg-blue-50 p-4 rounded-full mb-4">
+                <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                </svg>
+            </div>
+            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Nuevo Alumno</h1>
+            <p class="text-xs text-slate-400 mt-1 text-center font-medium">Completa la información para el registro</p>
+        </div>
+
+        <form action="" method="POST" novalidate class="space-y-5">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="text-[11px] text-slate-900 font-bold uppercase tracking-wider mb-2 block ml-1">Nombre</label>
+                    {{ form.nombre(class="w-full px-5 py-3 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:ring-0 text-sm text-slate-700 transition-all outline-none", placeholder="Ej. Juan") }}
+                </div>
+
+                <div>
+                    <label class="text-[11px] text-slate-900 font-bold uppercase tracking-wider mb-2 block ml-1">Apellidos</label>
+                    {{ form.apellidos(class="w-full px-5 py-3 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:ring-0 text-sm text-slate-700 transition-all outline-none", placeholder="Ej. Pérez") }}
+                </div>
+
+                <div>
+                    <label class="text-[11px] text-slate-900 font-bold uppercase tracking-wider mb-2 block ml-1">Correo Electrónico</label>
+                    {{ form.email(class="w-full px-5 py-3 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:ring-0 text-sm text-slate-700 transition-all outline-none", placeholder="correo@ejemplo.com") }}
+                </div>
+
+                <div>
+                    <label class="text-[11px] text-slate-900 font-bold uppercase tracking-wider mb-2 block ml-1">Teléfono</label>
+                    {{ form.telefono(class="w-full px-5 py-3 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:ring-0 text-sm text-slate-700 transition-all outline-none", placeholder="1234567890") }}
+                </div>
+            </div>
+
+            <div class="pt-6 space-y-4">
+                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 font-bold rounded-2xl text-base px-6 py-4 transition-all shadow-lg shadow-blue-100 active:scale-95">
+                    + Registrar Alumno
+                </button>
+                
+                <a href="/alumnos" class="flex justify-center items-center w-full text-slate-400 hover:text-slate-600 font-bold text-sm transition-colors py-2">
+                    Cancelar y regresar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

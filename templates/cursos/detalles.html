@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="min-h-screen bg-slate-50 py-12 px-6">
+    <div class="max-w-5xl mx-auto">
+        
+        <div class="mb-6">
+            <a href="/cursos" class="inline-flex items-center text-slate-400 hover:text-slate-900 font-bold text-sm transition-colors group">
+                <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                Regresar al listado
+            </a>
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden mb-8">
+            <div class="p-8 md:p-12 bg-gradient-to-r from-slate-900 to-slate-800 text-white">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <span class="text-blue-400 text-[10px] font-black uppercase tracking-[0.3em] mb-2 block">Resumen General del Curso</span>
+                        <h1 class="text-4xl font-black tracking-tight mb-2">{{ nombre }}</h1>
+                        <div class="flex items-center text-slate-300">
+                            <svg class="w-5 h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+                            <span class="font-bold">Profesor:</span>
+                            <span class="ml-2 font-medium">{{ maestro.nombre }} {{ maestro.apellidos }}</span>
+                        </div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/10 text-center">
+                        <p class="text-[10px] font-black uppercase tracking-widest text-blue-300 mb-1">Alumnos Inscritos</p>
+                        <p class="text-4xl font-black">{{ alumnos|length }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 md:p-8">
+                <h3 class="text-sm font-black text-slate-400 uppercase tracking-[0.2em] mb-6 ml-4">Lista de Asistencia</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                                <th class="px-6 py-4">Nombre del Alumno</th>
+                                <th class="px-6 py-4">Información de Contacto</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50">
+                            {% for alumno in alumnos %}
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="px-6 py-5">
+                                    <p class="text-sm font-black text-slate-800">{{ alumno.nombre }} {{ alumno.apellidos }}</p>
+                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">Matrícula: #{{ alumno.matricula }}</p>
+                                </td>
+                                <td class="px-6 py-5">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-bold text-slate-600">{{ alumno.email }}</span>
+                                        <span class="text-xs text-slate-400 font-medium italic">{{ alumno.telefono }}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% if not alumnos %}
+                <div class="py-16 text-center">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-slate-50 rounded-full mb-4">
+                        <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                    </div>
+                    <p class="text-slate-400 font-bold">No hay alumnos registrados en este curso.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <p class="text-center text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">Fin del Resumen Académico</p>
+    </div>
+</div>
+
+{% endblock %}
